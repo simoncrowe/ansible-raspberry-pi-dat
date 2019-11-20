@@ -1,0 +1,97 @@
+---
+## Sets up public key authentication on hosts with newly installed Raspbian.
+- name: Authentication setup
+
+  hosts: all
+  gather_facts: no
+
+  vars_prompt:
+    - name: 'ssh_public_key_path'
+      prompt: 'Where is your SSH public key?'
+      default: '~/.ssh/id_rsa.pub'
+      private: no
+    - name: 'pi_user_password'
+      prompt: "What should the new password for the user 'pi' be?"
+      private: yes
+      encrypt: 'sha512_crypt'
+      confirm: yes
+      salt_size: 12
+    - name: 'disable_password_auth_ssh'
+      prompt: 'Disable password authentication over SSH from now on? yes/no'
+      private: no
+      default: 'yes'
+
+  tasks:
+    - name: Add SSH key for passwordless login (pi).
+      authorized_key:
+        user: pi
+        key: '{{ item }}'
+      with_file:
+        - '{{ ssh_public_key_path }}'
+
+    - name: Change default password
+      become: yes
+      user:
+        name: pi
+        password: '{{ pi_user_password }}'
+
+    - name: Create worker group
+      become: yes
+      group:
+        name: worker
+
+    # TODO: worker should not be in  sudoers list!
+    - name: Create worker user without sudo permissions.
+      become: yes
+      user:
+        name: worker
+        group: worker
+        shell: /bin/bash
+
+    - name: Add SSH key for passwordless login (worker).
+      become: yes
+      authorized_key:
+        user: worker
+        key: '{{ item }}'
+      with_file:
+        - '{{ ssh_public_key_path }}'
+
+    # This is a standard security precaution
+    - name: Disable root login over SSH.
+      become: yes
+      lineinfile:
+        dest: '/etc/ssh/sshd_config'
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+
+    - name: Expliciely enabling public key SSH authentication.
+      become: yes
+      lineinfile:
+        dest: '/etc/ssh/sshd_config'
+        regexp: '^#?PubkeyAuthentication'
+        line: '#PubkeyAuthentication yes'
+
+    - name: Disable password-based SSH authentication.
+      become: yes
+      lineinfile:
+        dest: '/etc/ssh/sshd_config'
+        regexp: '^#?PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+      when: disable_password_auth_ssh|bool
+
+    - name: Disable challange response SSH authentication.
+      become: yes
+      lineinfile:
+        dest: '/etc/ssh/sshd_config'
+        regexp: '^#?ChallengeResponseAuthentication'
+        line: 'ChallengeResponseAuthentication no'
+      when: disable_password_auth_ssh|bool
+      notify:
+        - reload ssh
+
+  handlers:
+    - name: reload ssh
+      become: yes
+      service:
+        name: ssh
+        state: reloaded
