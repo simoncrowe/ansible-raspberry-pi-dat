@@ -5,7 +5,7 @@ Homebase.
 It is partly inspired by https://github.com/agoramaHub/ansible-raspberry-server. 
 I started a new repo largely because of the lack of a licence.
 
-###Instructions
+### Instructions
 Clone this repository
 ```bash
 git clone https://github.com/simoncrowe/ansible-raspberry-pi-dat-homebase.git
