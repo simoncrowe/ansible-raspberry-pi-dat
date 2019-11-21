@@ -23,8 +23,12 @@ a newly created Python virtual environment.
 
 #### 1. SSH Authentication Setup
 ##### 1.1. Preparation
-You will probably need to install 
-[sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) for this step to work.
+You'll need to install the
+[sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) 
+package for this step to work. If you haven't used the pipenv method above,
+you'll also need the 
+[passlib](https://passlib.readthedocs.io/en/stable/install.html#installation-instructions) 
+PIP package.
 
 If you haven't already generated ssh keys for your machine (not the pi), 
 you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
@@ -46,7 +50,8 @@ ping raspberrypi.local
 ```
 
 If it isn't your Pi may not be reachable on your network or only by its IP 
-address. 
+address. If you have more than one Pi connected, you'll still need to find the 
+IP address fo the Pi you want to set up. 
 
 <details>
 <summary>One way to see if your Pi is on your network is using nmap</summary>
@@ -82,9 +87,12 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 The line `22/tcp open  ssh     OpenSSH 7.9p1 Raspbian 10 (protocol 2.0)` 
 will only appear is your Pi has SSH enabled. If you can't easily identify your 
 Pi, double-check that SSH has been enabled on it.
+
+If you see more than one Pi, you'll need to either temporally switch off your
+Pi to work out which one it is, or find out its MAC address.
 </details>
 
-If your Pi does turn out not to be accessible at raspberrypi.local, you'll 
+If your Pi does turn out not to be accessible at `raspberrypi.local`, you'll 
 need to put its IP address in the file called `hosts` in the root directory 
 of this repository.
 
