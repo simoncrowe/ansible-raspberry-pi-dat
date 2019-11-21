@@ -6,7 +6,7 @@ It is partly inspired by https://github.com/agoramaHub/ansible-raspberry-server.
 I started a new repo largely because of the lack of a licence.
 
 ### Instructions
-Clone this repository
+Clone this repository.
 ```bash
 git clone https://github.com/simoncrowe/ansible-raspberry-pi-dat-homebase.git
 cd ansible-raspberry-pi-dat-homebase
@@ -21,20 +21,26 @@ pipenv shell
 After running the above you should be able to run Ansible from inside 
 a newly created Python virtual environment.
 
-#### 1. SSH Authentication setup
-You will probably need to install `sshpass` for this step to work.
+#### 1. SSH Authentication Setup
+##### 1.1. Preparation
+You will probably need to install 
+[sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) for this step to work.
 
 If you haven't already generated ssh keys for your machine (not the pi), 
-you can do so with the 'ssh-keygen` shell command.
+you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
+command.
 
-You'll need a 
+You'll need an 
 [SSH-enabled](https://www.raspberrypi.org/documentation/remote-access/ssh/) Pi 
 with a fresh Raspbian installation. I'd recommend Raspbian Lite for a server.
 
 Power up your Pi and ensure it's connected to your network. 
 Ethernet is preferable; 
 [WiFi](https://www.raspberrypi.org/documentation/configuration/wireless/README.md) 
-is also an option. The following command should be successful.
+is also an option. 
+
+If you have only one Pi connected to your network and the following command 
+is successful, you can proceed to step 1.2.
 ```bash
 ping raspberrypi.local
 ```
@@ -43,7 +49,7 @@ If it isn't your Pi may not be reachable on your network or only by its IP
 address. 
 
 <details>
-<summary>One way to see if your Pi is on your network is nmap</summary>
+<summary>One way to see if your Pi is on your network is using nmap</summary>
 
 If you don't have nmap installed, you should be able to get it via your
 system package manager.  e.g. `sudo apt install nmap`
@@ -81,6 +87,8 @@ Pi, double-check that SSH has been enabled on it.
 If your Pi does turn out not to be accessible at raspberrypi.local, you'll 
 need to put its IP address in the file called `hosts` in the root directory 
 of this repository.
+
+##### 1.2. Automated setup 
 
 The next step is to run the relevant playbook.
 ```bash
