@@ -1,5 +1,5 @@
 ---
-## This playbook configures and deploys Homebase and dependencies. on Pis.
+## Configures and deploys Homebase and dependencies. on Pis.
 
 - hosts: all
 
