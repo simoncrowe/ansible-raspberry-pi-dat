@@ -16,10 +16,6 @@
       encrypt: 'sha512_crypt'
       confirm: yes
       salt_size: 12
-    - name: 'disable_password_auth_ssh'
-      prompt: 'Disable password authentication over SSH from now on? yes/no'
-      private: no
-      default: 'yes'
 
   tasks:
     - name: Add SSH key for passwordless login (pi).
@@ -55,43 +51,3 @@
         key: '{{ item }}'
       with_file:
         - '{{ ssh_public_key_path }}'
-
-    # This is a standard security precaution
-    - name: Disable root login over SSH.
-      become: yes
-      lineinfile:
-        dest: '/etc/ssh/sshd_config'
-        regexp: '^#?PermitRootLogin'
-        line: 'PermitRootLogin no'
-
-    - name: Expliciely enabling public key SSH authentication.
-      become: yes
-      lineinfile:
-        dest: '/etc/ssh/sshd_config'
-        regexp: '^#?PubkeyAuthentication'
-        line: '#PubkeyAuthentication yes'
-
-    - name: Disable password-based SSH authentication.
-      become: yes
-      lineinfile:
-        dest: '/etc/ssh/sshd_config'
-        regexp: '^#?PasswordAuthentication'
-        line: 'PasswordAuthentication no'
-      when: disable_password_auth_ssh|bool
-
-    - name: Disable challange response SSH authentication.
-      become: yes
-      lineinfile:
-        dest: '/etc/ssh/sshd_config'
-        regexp: '^#?ChallengeResponseAuthentication'
-        line: 'ChallengeResponseAuthentication no'
-      when: disable_password_auth_ssh|bool
-      notify:
-        - reload ssh
-
-  handlers:
-    - name: reload ssh
-      become: yes
-      service:
-        name: ssh
-        state: reloaded

@@ -109,8 +109,22 @@ if you haven't changed this yet, it'll be `raspberry`.
 it's probably the default, so hitting ENTER is fine.
 3. The new password for the default `pi` user of your Pi. It's a good idea to 
 change this from the default, so let's automate it!
-4. Whether you want to disable password-based SSH authentication to you Pi
-from now on. I'd recommend going with the default of `yes`. If you're exposing
-a machine to the web, password authentication isn't that secure.
 
-Hopefully the playbook runs to completion.
+If the playbook runs to completion without errors, you will no longer 
+be prompted for a password when opening an SSH session on your Pi. E.g.
+```bash
+ssh pi@raspberrypi.local
+```
+
+You will, however, not be able to SSH into your PI using another machine with 
+a different public key to the one you've run the playbook on. If you want to 
+authenticate from other machines, you can 
+[set this up manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
+
+#### 2. Server Setup
+If step 1 was successful, setting up DAT/Homebase should only require one 
+command:
+
+```bash
+ansible-playbook site.yaml
+```
