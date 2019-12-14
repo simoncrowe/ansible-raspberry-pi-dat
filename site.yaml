@@ -1,5 +1,14 @@
 ---
-## Configures and deploys Homebase and dependencies. on Pis.
+## Configures and deploys Homebase and dependencies on Pis.
 
-- hosts: all
-
+- name: Configures and deploys Homebase and dependencies on Pi(s).
+  hosts: all
+  remote_user: pi
+  become: yes
+  roles:
+    - basic_packages
+    - geerlingguy.security
+    - geerlingguy.firewall
+    - geerlingguy.ntp
+    - nodesource.node
+    - nginxinc.nginx

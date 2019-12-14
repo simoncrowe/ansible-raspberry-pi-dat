@@ -1,0 +1,22 @@
+# geerlingguy.security - see https://galaxy.ansible.com/geerlingguy/security
+security_sudoers_passwordless:
+  - pi
+
+security_autoupdate_reboot: true
+#TODO: look into specifying an email for alerts via /etc/aliases
+
+# geerlingguy.firewall - see https://galaxy.ansible.com/geerlingguy/firewall
+firewall_allowed_tcp_ports:
+  - '22' # ssh
+  - '80' # http
+  - '443' # https
+  # dat ports
+  - '3282'
+  - '3283'
+
+firewall_allowed_udp_ports:
+  - '5353' # avahi - required to use raspberrypi.local address
+
+# geerlingguy.ntp - see https://galaxy.ansible.com/geerlingguy/ntp
+
+ntp_timezone: Europe/London
