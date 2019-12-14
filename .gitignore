@@ -1,2 +1,6 @@
+hosts
+roles/*
+!roles/basic_packages
+
 # PyCharm specific
 /.idea
