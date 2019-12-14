@@ -1,0 +1,13 @@
+- name: Update apt package cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install git
+  package:
+    name: git
+    state: present
+
+- name: Upgrade apt packages
+  apt:
+    upgrade: safe
