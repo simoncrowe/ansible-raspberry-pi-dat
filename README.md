@@ -13,7 +13,8 @@ cd ansible-raspberry-pi-dat-homebase
 ```
 
 To use any of these playbooks you will need Ansible installed. One easy way, 
-though it does require [pipenv](https://pipenv-es.readthedocs.io/es/stable/#install-pipenv-today), is to use the PipFile included. 
+though it does require [pipenv](https://pipenv-es.readthedocs.io/es/stable/#install-pipenv-today), 
+is to use the PipFile included. 
 ```bash
 pipenv install
 pipenv shell
@@ -36,7 +37,7 @@ command.
 
 You'll need an 
 [SSH-enabled](https://www.raspberrypi.org/documentation/remote-access/ssh/) Pi 
-with a fresh Raspbian installation. I'd recommend Raspbian Lite for a server.
+with a fresh Raspbian installation. Raspbian Lite makes more sense for a server.
 
 Power up your Pi and ensure it's connected to your network. 
 Ethernet is preferable; 
@@ -45,13 +46,32 @@ is also an option.
 
 If you have only one Pi connected to your network and the following command 
 is successful, you can proceed to step 1.2.
+
 ```bash
 ping raspberrypi.local
 ```
 
-If it isn't your Pi may not be reachable on your network or only by its IP 
+Successful output should look something like this:
+
+```bash
+64 bytes from 192.168.1.3: icmp_seq=1 ttl=64 time=2.16 ms
+```
+
+If you do see something like the above, it may be worth replacing 
+`raspberrypi.local` with pi's IP address (e.g. `192.168.1.3`) to the file called
+`hosts` in the root directory of this repository. The hostname 
+`raspberrypi.local` isn't that reliable and it could cause problems with Ansible 
+later.
+
+Unsuccessful output will look like this:
+
+```bash
+ping: unknown host raspberrypi.local
+```
+
+If you get this, your Pi might not reachable on your network or only by its IP 
 address. If you have more than one Pi connected, you'll still need to find the 
-IP address fo the Pi you want to set up. 
+IP address of the Pi you want to set up. 
 
 <details>
 <summary>One way to see if your Pi is on your network is using nmap</summary>
@@ -128,3 +148,11 @@ command:
 ```bash
 ansible-playbook site.yaml
 ```
+
+If successful, the above command applies a number of Ansible roles listed in 
+site.yaml to your Pi, including basic security configuration. 
+A consequence of this hardened security is that you will now be unable to 
+SSH into your Pi using a user's password.
+Passwordless login will still work, and you can 
+[manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) 
+add the public keys of other machines to your Pi if needed.
