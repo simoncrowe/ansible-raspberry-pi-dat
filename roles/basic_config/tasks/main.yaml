@@ -1,0 +1,6 @@
+# To ensure sensible output when SSH-ing in using zsh
+- name: Ensure 'TERM=ansi' is set in  .bashrc
+  lineinfile:
+    path: /home/pi/.bashrc
+    line: export TERM=ansi
+    state: present
