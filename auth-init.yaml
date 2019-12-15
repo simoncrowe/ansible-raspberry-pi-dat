@@ -25,29 +25,8 @@
       with_file:
         - '{{ ssh_public_key_path }}'
 
-    - name: Change default password
+    - name: Change default password (pi).
       become: yes
       user:
         name: pi
         password: '{{ pi_user_password }}'
-
-    - name: Create worker group
-      become: yes
-      group:
-        name: worker
-
-    # TODO: worker should not be in  sudoers list!
-    - name: Create worker user without sudo permissions.
-      become: yes
-      user:
-        name: worker
-        group: worker
-        shell: /bin/bash
-
-    - name: Add SSH key for passwordless login (worker).
-      become: yes
-      authorized_key:
-        user: worker
-        key: '{{ item }}'
-      with_file:
-        - '{{ ssh_public_key_path }}'
