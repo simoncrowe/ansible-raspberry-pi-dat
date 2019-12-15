@@ -142,9 +142,14 @@ authenticate from other machines, you can
 [set this up manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 
 #### 2. Server Setup
-If step 1 was successful, setting up DAT/Homebase should only require one 
-command:
+If step 1 was successful, setting up DAT/Homebase should be simple.
 
+First, install the third-party roles:
+```bash
+ansible-galaxy install -r requirements.yaml
+```
+
+Second, run the main playbook:
 ```bash
 ansible-playbook site.yaml
 ```
@@ -156,3 +161,33 @@ SSH into your Pi using a user's password.
 Passwordless login will still work, and you can 
 [manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) 
 add the public keys of other machines to your Pi if needed.
+
+#### 3. Server Modification
+
+You'll need to SSH into your pi to change the default Homebase configuration:
+
+```
+ssh pi@<hostname or IP address of pi>
+```
+You may be able to connect to the hostname `raspberrypi.local`. Failing at that
+you'll need to use the pi's IP address.
+
+Now edit the Homebase configuration file, following the Homebase Docs:
+```bash
+vim .homebase.yml
+```
+
+You can run homebase in the foreground to see if there are any errors:
+```bash
+homebase
+```
+
+Once you're happy with your config you can run it daemonised using:
+```bash
+pm2 start homebase
+```
+
+Similarly, you can stop it using:
+```bash
+pm2 stop homebase
+```

@@ -8,6 +8,11 @@
     name: git
     state: present
 
+- name: Install vim
+  package:
+    name: vim
+    state: present
+
 - name: Upgrade apt packages
   apt:
     upgrade: safe
