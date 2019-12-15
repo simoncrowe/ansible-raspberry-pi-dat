@@ -1,0 +1,14 @@
+httpMirror: true       # enables HTTP mirroring
+
+ports:
+  http: 80             # HTTP port for redirects or non-TLS serving
+  https: 443           # HTTPS port for serving mirrored content and DNS data
+
+letsencrypt:           # set to false to disable Let's Encrypt
+  email: {{ letsencrypt_email }}
+  agreeTos: true
+
+# enter your pinned dats here
+dats:
+  - url:               # URL of the dat to be pinned
+    domains:           # (optional) the domains of the dat

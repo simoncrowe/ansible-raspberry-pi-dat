@@ -1,0 +1,5 @@
+- name: Copy basic Homebase config to server.
+  template:
+    src: .homebase.yml.j2
+    dest: /home/pi/.homebase.yml
+    mode: 0644
