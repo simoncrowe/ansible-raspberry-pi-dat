@@ -7,5 +7,5 @@ verify_ssl = true
 ansible-lint = "*"
 
 [packages]
-ansible = "==2.9"
+ansible = "==2.9.2"
 passlib = "*"
