@@ -1,0 +1,11 @@
+httpMirror: true       # enables HTTP mirroring
+
+ports:
+  http: {{ homebase_http_port }}             # HTTP port for redirects or non-TLS serving
+  https: {{ homebase_https_port }}           # HTTPS port for serving mirrored content and DNS data
+
+# enter your pinned dats here
+dats:
+  - url: {{ dat_url }}
+    domains:
+       - localhost

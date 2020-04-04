@@ -1,0 +1,9 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name {{ https_mirror_domain }};
+
+    location / {
+        proxy_pass http://localhost:{{ homebase_http_port }};
+    }
+}

@@ -23,3 +23,7 @@ nodejs_npm_global_packages:
     version: 2.0.8
   - name: pm2
     version: 4.2.1
+
+# hombase_config
+homebase_http_port: 8080
+homebase_https_port: 4433

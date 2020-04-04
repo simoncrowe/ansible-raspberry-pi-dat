@@ -1,0 +1,2 @@
+- name: Generate SSL certificates
+  shell: certbot --nginx --noninteractive --agree-tos --email {{ letsencrypt_email }} -d {{ https_mirror_domain }}

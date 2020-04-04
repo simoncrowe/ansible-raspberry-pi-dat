@@ -2,7 +2,9 @@ hosts
 roles/*
 !roles/basic_config
 !roles/basic_packages
-!roles/homebase_config
+!roles/homebase
+!roles/nginx_config
+!roles/certbot
 
 # PyCharm specific
 /.idea

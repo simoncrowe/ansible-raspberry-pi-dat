@@ -1,7 +1,22 @@
+- name: Add apt repository for certbot
+  apt_repository:
+    repo: 'ppa:certbot/certbot'
+    codename: trusty
+
 - name: Update apt package cache
   apt:
     update_cache: yes
     cache_valid_time: 3600
+
+- name: Install nginx
+  package:
+    name: nginx
+    state: present
+
+- name: Install python-certbot-nginx
+  package:
+    name: python-certbot-nginx
+    state: present
 
 - name: Install git
   package:
@@ -16,3 +31,6 @@
 - name: Upgrade apt packages
   apt:
     upgrade: safe
+
+#- name: Reboot the machine to avoid issues with iptables setup
+#  reboot:

@@ -1,0 +1,10 @@
+- name: Delete default NGINX http server conf.
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Copy NGINX http server config for landing page.
+  template:
+    src: mirror_domain.conf.j2
+    dest: /etc/nginx/conf.d/{{ https_mirror_domain }}.conf
+    mode: 0644

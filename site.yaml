@@ -5,12 +5,21 @@
   hosts: all
   remote_user: pi
   become: yes
+
   vars_files:
     - vars/main.yaml
+
   vars_prompt:
+    - name: 'dat_url'
+      prompt: 'Enter the url of a DAT you wish to pin.'
+      private: no
+    - name: 'https_mirror_domain'
+      prompt: 'Enter the domain name you wish to mirror your DAT to.'
+      private: no
     - name: 'letsencrypt_email'
       prompt: 'What email would you like to use for letsencrypt?'
       private: no
+
   roles:
     - basic_config
     - basic_packages
@@ -18,4 +27,6 @@
     - geerlingguy.firewall
     - geerlingguy.ntp
     - geerlingguy.nodejs
-    - homebase_config
+    - nginx_config
+    - certbot
+    - homebase
