@@ -12,15 +12,11 @@ git clone https://github.com/simoncrowe/ansible-raspberry-pi-dat-homebase.git
 cd ansible-raspberry-pi-dat-homebase
 ```
 
-To use any of these playbooks you will need Ansible installed. One easy way, 
-though it does require [pipenv](https://pipenv-es.readthedocs.io/es/stable/#install-pipenv-today), 
-is to use the PipFile included. 
+To use any of these playbooks you will need Ansible installed. (You may wish to do this in a [virtual environment](https://docs.python.org/3/tutorial/venv.html).)
+
 ```bash
-pipenv install
-pipenv shell
+pip install ansible passlib
 ```
-After running the above you should be able to run Ansible from inside 
-a newly created Python virtual environment.
 
 #### 1. SSH Authentication Setup
 ##### 1.1. Preparation
