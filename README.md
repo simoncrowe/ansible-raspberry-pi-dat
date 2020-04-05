@@ -196,7 +196,7 @@ add the public keys of other machines to your Pi if needed.
 
 #### 3. Server Modification
 
-You'll need to SSH into your pi to change the default Homebase configuration:
+You'll need to SSH into your pi to start the Homebase service:
 
 ```
 ssh pi@<hostname or IP address of pi>
@@ -205,7 +205,7 @@ You may be able to connect to the hostname `raspberrypi.local`. Failing at that
 you'll need to use the pi's IP address.
 
 
-Once you're happy with your config you can run it daemonised using:
+You can run Homebase as a background process (deamon) using pm2:
 ```bash
 pm2 start homebase
 ```
