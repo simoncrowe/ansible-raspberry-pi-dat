@@ -1,9 +1,24 @@
 ## ansible-raspberry-pi-dat
 This repo automates setting up a Raspberry Pi as a DAT web server running 
-Homebase.
+Homebase with the following basic features:
+- Pin one DAT with a HTTPS mirror.
+- Pin as many DATs as you need without HTTPS mirroring.
 
-It is partly inspired by https://github.com/agoramaHub/ansible-raspberry-server. 
-I started a new repo largely because of the lack of a licence.
+You should be able to modify the `homebase` role to enable more features.
+
+<details>
+<summary>Why only one HTTPS-mirrored DAT?</summary>
+I was unable to get Homebase's own Letsencrypt SSL certificate provisioning 
+feature working. Instead I've used a combination of NGINX and Certbot.
+
+Homebase listens for HTTP requests on port 8080 and NGINX acts as a reverse proxy,
+enabling HTTPS requests to be passed to Homebase. Because the NGINX server 
+proxies localhost:8080, only one DAT can be mirrored to HTTPS.
+
+If you know of a better solution, please let me know or open a PR.
+</details>
+This Ansible approach is inspired by https://github.com/agoramaHub/ansible-raspberry-server. 
+I started a new repo largely because of the lack of a licence in agoramaHub's one.
 
 ### Instructions
 Clone this repository.
@@ -138,8 +153,29 @@ authenticate from other machines, you can
 [set this up manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 
 #### 2. Server Setup
-If step 1 was successful, setting up DAT/Homebase should be simple.
+If step 1 was successful, setting up DAT/Homebase should be simple. 
 
+##### 2.1. Configuration
+You'll need to create a file called `private.yaml` in the `vars` subdirectory
+of this repo and put the following YAML in it, replacing values as appropriate:
+
+```yaml
+# The DAT that you want to mirror over HTTPS
+landing_page_dat_url: dat://c6bbbb7c3f292ddca9df3c6ebcdb9c21a66a3f0d3dad065cbfb0a59bb0098aa3/
+# The domain name that you want to mirror the above DAT on.
+# This must have a DNS record pointing at your Pi's IP address.
+landing_page_https_domain: example.com
+# The email address to use when verifying SSL certificates with Letsencrypt
+letsencrypt_email: info@example.com
+
+# Add any other dat URLs you want to pin using Homebase in this list
+hosted_dat_urls:
+  - dat://bc9fc525239efd6e886a4b7d402ee800d1dd2812363f3be5161f0423fa46d3a3
+  - dat://c57ef9a28674ff072d293ac744a172a2aa4c975ea8ffeba964fed23fbca2ce77
+# If you don't want to pin any, just specify an empty list like so:
+# hosted_dat_urls: []
+```
+##### 2.2. Setup
 First, install the third-party roles:
 ```bash
 ansible-galaxy install -r requirements.yaml
@@ -168,15 +204,6 @@ ssh pi@<hostname or IP address of pi>
 You may be able to connect to the hostname `raspberrypi.local`. Failing at that
 you'll need to use the pi's IP address.
 
-Now edit the Homebase configuration file, following the Homebase Docs:
-```bash
-vim .homebase.yml
-```
-
-You can run homebase in the foreground to see if there are any errors:
-```bash
-homebase
-```
 
 Once you're happy with your config you can run it daemonised using:
 ```bash
@@ -186,4 +213,8 @@ pm2 start homebase
 Similarly, you can stop it using:
 ```bash
 pm2 stop homebase
+```
+If homebase isn't working, or running in the foreground to see if there are any errors:
+```bash
+homebase
 ```

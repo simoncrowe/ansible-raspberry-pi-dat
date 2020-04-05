@@ -32,5 +32,5 @@
   apt:
     upgrade: safe
 
-#- name: Reboot the machine to avoid issues with iptables setup
+#- name: Reboot the server to avoid issues with iptables setup.
 #  reboot:

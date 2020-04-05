@@ -6,6 +6,9 @@ ports:
 
 # enter your pinned dats here
 dats:
-  - url: {{ dat_url }}
+  - url: {{ landing_page_dat_url }}
     domains:
        - localhost
+{% for url in hosted_dat_urls %}
+  - url: {{ url }}
+{% endfor %}
