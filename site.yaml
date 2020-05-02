@@ -20,3 +20,4 @@
     - nginx_config
     - certbot
     - homebase
+    - dynamic_dns

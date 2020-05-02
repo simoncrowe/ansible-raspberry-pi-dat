@@ -160,6 +160,9 @@ You'll need to create a file called `private.yaml` in the `vars` subdirectory
 of this repo and put the following YAML in it, replacing values as appropriate:
 
 ```yaml
+# The url used to update dynamic DNS record (in case your IP address changes)
+dynamic_dns_update_url: https://freedns.afraid.org/dynamic/update.php?sPAMSPAMSPAMSPAMSPAMSPAM=
+
 # The DAT that you want to mirror over HTTPS
 landing_page_dat_url: dat://c6bbbb7c3f292ddca9df3c6ebcdb9c21a66a3f0d3dad065cbfb0a59bb0098aa3/
 # The domain name that you want to mirror the above DAT on.

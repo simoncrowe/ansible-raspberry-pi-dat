@@ -5,6 +5,7 @@ roles/*
 !roles/homebase
 !roles/nginx_config
 !roles/certbot
+!roles/dynamic_dns
 vars/private.yaml
 # PyCharm specific
 /.idea

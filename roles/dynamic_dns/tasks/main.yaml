@@ -1,0 +1,7 @@
+- name: Ensuring cron job to update dynamic DNS three times a day.
+  cron:
+    name: "Update DNS"
+    minute: "0"
+    hour: "0,8,16"
+    job: "curl -k {{ dynamic_dns_update_url }}"
+
