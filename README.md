@@ -37,10 +37,7 @@ pip install ansible passlib
 ##### 1.1. Preparation
 You'll need to install the
 [sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) 
-package for this step to work. If you haven't used the pipenv method above,
-you'll also need the 
-[passlib](https://passlib.readthedocs.io/en/stable/install.html#installation-instructions) 
-PIP package.
+package for this step to work.
 
 If you haven't already generated ssh keys for your machine (not the pi), 
 you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
