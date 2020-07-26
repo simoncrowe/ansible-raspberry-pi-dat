@@ -1,30 +1,29 @@
-## ansible-raspberry-pi-dat
-This repo automates setting up a Raspberry Pi as a DAT web server running 
-Homebase with the following basic features:
-- Pin one DAT with a HTTPS mirror.
-- Pin as many DATs as you need without HTTPS mirroring.
+This repo automates setting up a Raspberry Pi as a hyper/https server. 
+It uses [Homebase](https://github.com/beakerbrowser/homebase) to pin hyperdrves 
+and NGINX to securely handle requests to Homebases's HTTP service.
+with the following basic features:
+- Pin one hyperdrive with a HTTPS mirror.
+- Pin as many hyperdrives as you need without HTTPS mirroring.
 
 You should be able to modify the `homebase` role to enable more features.
 
 <details>
-<summary>Why only one HTTPS-mirrored DAT?</summary>
-I was unable to get Homebase's own Letsencrypt SSL certificate provisioning 
-feature working. Instead I've used a combination of NGINX and Certbot.
+<summary>Why only one HTTPS-mirrored hyperdrive?</summary>
+Version 3 of Homebase has dropped the Letsencrypt feature.
+In its place I've used a combination of NGINX and Certbot.
 
-Homebase listens for HTTP requests on port 8080 and NGINX acts as a reverse proxy,
-enabling HTTPS requests to be passed to Homebase. Because the NGINX server 
-proxies localhost:8080, only one DAT can be mirrored to HTTPS.
+Homebase listens for HTTP requests on port `8080` and NGINX acts as a reverse proxy,
+enabling HTTPS requests to be passed to Homebase. Because homebase is uses the host `localhost`
+and NGINX listens to `localhost:8080`, only one hyperdrive can be mirrored to HTTPS.
 
 If you know of a better solution, please let me know or open a PR.
 </details>
-This Ansible approach is inspired by https://github.com/agoramaHub/ansible-raspberry-server. 
-I started a new repo largely because of the lack of a licence in agoramaHub's one.
 
 ### Instructions
 Clone this repository.
 ```bash
-git clone https://github.com/simoncrowe/ansible-raspberry-pi-dat-homebase.git
-cd ansible-raspberry-pi-dat-homebase
+git clone https://github.com/simoncrowe/ansible-raspberry-pi-hyperdrive-homebase-nginx.git
+cd ansible-raspberry-pi-hyperdrive-homebase-nginx
 ```
 
 To use any of these playbooks you will need Ansible installed. (You may wish to do this in a [virtual environment](https://docs.python.org/3/tutorial/venv.html).)
@@ -39,24 +38,24 @@ You'll need to install the
 [sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) 
 package for this step to work.
 
-If you haven't already generated ssh keys for your machine (not the pi), 
+If you haven't already generated ssh keys for your machine (not the Pi), 
 you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
 command.
 
-You'll need an Pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
+You'll need an pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
 (a.k.a. Raspbian) installation.
 The _Lite_ version of the OS makes more sense for a server as it lacks a GUI.
 
-Enable SSH on the Pi. You should follow sectiuon 3 of this 
+Enable SSH on the pi. You should follow sectiuon 3 of this 
 [page](https://www.raspberrypi.org/documentation/remote-access/ssh/) 
 for headless Raspberry Pi if you opted for _Raspberry Pi OS Lite_. 
 
-Power up your Pi and ensure it's connected to your network. 
+Power up your pi and ensure it's connected to your network. 
 Ethernet is preferable; 
 [WiFi](https://www.raspberrypi.org/documentation/configuration/wireless/README.md) 
 is also an option. 
 
-If you have only one Pi connected to your network and the following command 
+If you have only one pi connected to your network and the following command 
 is successful, you can proceed to step 1.2.
 
 ```bash
@@ -81,12 +80,12 @@ Unsuccessful output will look like this:
 ping: unknown host raspberrypi.local
 ```
 
-If you get this, your Pi might not reachable on your network or only by its IP 
-address. If you have more than one Pi connected, you'll still need to find the 
-IP address of the Pi you want to set up. 
+If you get this, your pi might not reachable on your network or only by its IP 
+address. If you have more than one pi connected, you'll still need to find the 
+IP address of the pi you want to set up. 
 
 <details>
-<summary>One way to see if your Pi is on your network is using nmap</summary>
+<summary>One way to see if your pi is on your network is using nmap</summary>
 
 If you don't have nmap installed, you should be able to get it via your
 system package manager.  e.g. `sudo apt install nmap`
@@ -96,7 +95,7 @@ minutes.
 ```bash
 sudo nmap -A 192.168.1.1/24
 ```
-If your Pi is connected, its report should look something like this:
+If your pi is connected, its report should look something like this:
 ```
 ...
 Nmap scan report for 192.168.1.3
@@ -117,44 +116,45 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ...
 ```
 The line `22/tcp open  ssh     OpenSSH 7.9p1 Raspbian 10 (protocol 2.0)` 
-will only appear is your Pi has SSH enabled. If you can't easily identify your 
-Pi, double-check that SSH has been enabled on it.
+will only appear is your pi has SSH enabled. If you can't easily identify your 
+pi, double-check that SSH has been enabled on it.
 
-If you see more than one Pi, you'll need to either temporally switch off your
-Pi to work out which one it is, or find out its MAC address.
+If you see more than one pi, you'll need to either temporally switch off your
+pi to work out which one it is, or find out its MAC address.
 </details>
 
-If your Pi does turn out not to be accessible at `raspberrypi.local`, you'll 
+If your pi does turn out not to be accessible at `raspberrypi.local`, you'll 
 need to put its IP address in the file called `hosts` in the root directory 
 of this repository.
 
 ##### 1.2. Automated setup 
 
-The next step is to run the relevant playbook.
+The next step is to run the Ansible playbook for setting up SSH 
+authentication on your pi.
 ```bash
 ansible-playbook auth-init.yaml -u pi --ask-pass
 ```
 You'll prompted three things:
-1. `SSH password:` the password of the default `pi` user on your Pi. 
+1. `SSH password:` the password of the default `pi` user on your pi. 
 if you haven't changed this yet, it'll be `raspberry`.
 2. The path to your public SSH key. If you don't know, 
 it's probably the default, so hitting ENTER is fine.
-3. The new password for the default `pi` user of your Pi. It's a good idea to 
+3. The new password for the default `pi` user of your pi. It's a good idea to 
 change this from the default, so let's automate it!
 
 If the playbook runs to completion without errors, you will no longer 
-be prompted for a password when opening an SSH session on your Pi. E.g.
+be prompted for a password when opening an SSH session on your pi. E.g.
 ```bash
 ssh pi@raspberrypi.local
 ```
 
-You will, however, not be able to SSH into your PI using another machine with 
+You will, however, not be able to SSH into your pi using another machine with 
 a different public key to the one you've run the playbook on. If you want to 
 authenticate from other machines, you can 
 [set this up manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 
 #### 2. Server Setup
-If step 1 was successful, setting up DAT/Homebase should be simple. 
+If step 1 was successful, setting up Homebase should be simple. 
 
 ##### 2.1. Configuration
 You'll need to create a file called `private.yaml` in the `vars` subdirectory
@@ -164,20 +164,20 @@ of this repo and put the following YAML in it, replacing values as appropriate:
 # The url used to update dynamic DNS record (in case your IP address changes)
 dynamic_dns_update_url: https://freedns.afraid.org/dynamic/update.php?sPAMSPAMSPAMSPAMSPAMSPAM=
 
-# The DAT that you want to mirror over HTTPS
-landing_page_dat_url: dat://c6bbbb7c3f292ddca9df3c6ebcdb9c21a66a3f0d3dad065cbfb0a59bb0098aa3/
-# The domain name that you want to mirror the above DAT on.
-# This must have a DNS record pointing at your Pi's IP address.
+# The hyperdrive that you want to mirror over HTTPS
+landing_page_hyper_url: hyper://c6bbbb7c3f292ddca9df3c6ebcdb9c21a66a3f0d3dad065cbfb0a59bb0098aa3/
+# The domain name that you want to mirror the above hyperdrive on.
+# This must have a DNS record pointing at your pi's IP address.
 landing_page_https_domain: example.com
 # The email address to use when verifying SSL certificates with Letsencrypt
 letsencrypt_email: info@example.com
 
-# Add any other dat URLs you want to pin using Homebase in this list
-hosted_dat_urls:
-  - dat://bc9fc525239efd6e886a4b7d402ee800d1dd2812363f3be5161f0423fa46d3a3
-  - dat://c57ef9a28674ff072d293ac744a172a2aa4c975ea8ffeba964fed23fbca2ce77
+# Add any other hyper URLs you want to pin using Homebase in this list
+hosted_hyper_urls:
+  - hyper://bc9fc525239efd6e886a4b7d402ee800d1dd2812363f3be5161f0423fa46d3a3
+  - hyper://c57ef9a28674ff072d293ac744a172a2aa4c975ea8ffeba964fed23fbca2ce77
 # If you don't want to pin any, just specify an empty list like so:
-# hosted_dat_urls: []
+# hosted_hyper_urls: []
 ```
 ##### 2.2. Setup
 First, install the third-party roles:
@@ -187,16 +187,16 @@ ansible-galaxy install -r requirements.yaml
 
 Second, run the main playbook:
 ```bash
-ansible-playbook site.yaml
+ansible-playbook setup-hyper-server.yaml
 ```
 
 If successful, the above command applies a number of Ansible roles listed in 
-site.yaml to your Pi, including basic security configuration. 
+site.yaml to your pi, including basic security configuration. 
 A consequence of this hardened security is that you will now be unable to 
-SSH into your Pi using a user's password.
+SSH into your pi using a user's password.
 Passwordless login will still work, and you can 
 [manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) 
-add the public keys of other machines to your Pi if needed.
+add the public keys of other machines to your pi if needed.
 
 #### 3. Server Modification
 
