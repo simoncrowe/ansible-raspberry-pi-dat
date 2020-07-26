@@ -7,7 +7,7 @@ firewall_allowed_tcp_ports:
   - '22' # ssh
   - '80' # http
   - '443' # https
-  # dat ports
+  # hyper ports
   - '3282'
   - '3283'
 firewall_allowed_udp_ports:
@@ -19,9 +19,9 @@ ntp_timezone: Europe/London
 # geerlingguy.ntp - see https://galaxy.ansible.com/geerlingguy/nodejs
 nodejs_version: "12.x"
 nodejs_npm_global_packages:
-  - name: '@beaker/homebase'
   - name: pm2
 
 # homebase_config
 homebase_http_port: 8080
 homebase_https_port: 4433
+

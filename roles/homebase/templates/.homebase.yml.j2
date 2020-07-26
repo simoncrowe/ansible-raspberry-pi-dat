@@ -5,10 +5,10 @@ ports:
   https: {{ homebase_https_port }}           # HTTPS port for serving mirrored content and DNS data
 
 # enter your pinned dats here
-dats:
-  - url: {{ landing_page_dat_url }}
+hyperdrives:
+  - url: {{ landing_page_hyper_url }}
     domains:
        - localhost
-{% for url in hosted_dat_urls %}
+{% for url in hosted_hyper_urls %}
   - url: {{ url }}
 {% endfor %}

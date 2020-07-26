@@ -1,5 +1,9 @@
+- name: Install homebase 3.0
+  shell: npm install -g git+https://github.com/beakerbrowser/homebase.git#ceeb2729b283da53dd466bb0b8f046c00a7197f0
+
 - name: Copy Homebase config to server.
   template:
     src: .homebase.yml.j2
     dest: /home/pi/.homebase.yml
     mode: 0644
+

@@ -4,3 +4,4 @@
     path: /home/pi/.bashrc
     line: export TERM=ansi
     state: present
+

@@ -37,5 +37,7 @@
   apt:
     upgrade: safe
 
-#- name: Reboot the server to avoid issues with iptables setup.
-#  reboot:
+- name: Reboot the server to avoid issues with iptables setup.
+  run_once: true
+  reboot:
+
