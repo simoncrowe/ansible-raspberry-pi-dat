@@ -43,9 +43,13 @@ If you haven't already generated ssh keys for your machine (not the pi),
 you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
 command.
 
-You'll need an 
-[SSH-enabled](https://www.raspberrypi.org/documentation/remote-access/ssh/) Pi 
-with a fresh Raspbian installation. Raspbian Lite makes more sense for a server.
+You'll need an Pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
+(a.k.a. Raspbian) installation.
+The _Lite_ version of the OS makes more sense for a server as it lacks a GUI.
+
+Enable SSH on the Pi. You should follow sectiuon 3 of this 
+[page](https://www.raspberrypi.org/documentation/remote-access/ssh/) 
+for headless Raspberry Pi if you opted for _Raspberry Pi OS Lite_. 
 
 Power up your Pi and ensure it's connected to your network. 
 Ethernet is preferable; 
@@ -130,7 +134,7 @@ The next step is to run the relevant playbook.
 ```bash
 ansible-playbook auth-init.yaml -u pi --ask-pass
 ```
-You'll prompted four things:
+You'll prompted three things:
 1. `SSH password:` the password of the default `pi` user on your Pi. 
 if you haven't changed this yet, it'll be `raspberry`.
 2. The path to your public SSH key. If you don't know, 
