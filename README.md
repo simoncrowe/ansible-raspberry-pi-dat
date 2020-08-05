@@ -200,7 +200,7 @@ Passwordless login will still work, and you can
 [manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) 
 add the public keys of other machines to your pi if needed.
 
-#### 3. Server Modification
+#### 3. Runnning Homebase
 
 You'll need to SSH into your pi to start the Homebase service:
 
@@ -220,7 +220,8 @@ Similarly, you can stop it using:
 ```bash
 pm2 stop homebase
 ```
-If homebase isn't working, try running in the foreground to see if there are any errors:
+If your Hyperdrive doesn't doesn't get a new peer connected when you start homebase and/or 
+you can't access the drive over HTTPS, try running in the foreground to see if there are any errors:
 ```bash
 homebase
 ```
