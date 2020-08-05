@@ -220,7 +220,7 @@ Similarly, you can stop it using:
 ```bash
 pm2 stop homebase
 ```
-If your Hyperdrive doesn't doesn't get a new peer connected when you start homebase and/or 
+If your Hyperdrive doesn't get a new peer connected when you start homebase and/or 
 you can't access the drive over HTTPS, try running in the foreground to see if there are any errors:
 ```bash
 homebase
