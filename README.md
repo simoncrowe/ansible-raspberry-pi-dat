@@ -1,6 +1,6 @@
 This repo automates setting up a Raspberry Pi as a hyper/https server. 
 It uses [Homebase](https://github.com/beakerbrowser/homebase) to pin hyperdrves 
-and NGINX to securely handle requests to Homebases's HTTP service.
+and NGINX to securely handle requests to Homebase's HTTP service.
 with the following basic features:
 - Pin one hyperdrive with a HTTPS mirror.
 - Pin as many hyperdrives as you need without HTTPS mirroring.
