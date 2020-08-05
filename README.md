@@ -218,7 +218,7 @@ Similarly, you can stop it using:
 ```bash
 pm2 stop homebase
 ```
-If homebase isn't working, or running in the foreground to see if there are any errors:
+If homebase isn't working, try running in the foreground to see if there are any errors:
 ```bash
 homebase
 ```
