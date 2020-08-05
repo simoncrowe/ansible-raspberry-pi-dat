@@ -16,7 +16,7 @@ Homebase listens for HTTP requests on port `8080` and NGINX acts as a reverse pr
 enabling HTTPS requests to be passed to Homebase. Because homebase is uses the host `localhost`
 and NGINX listens to `localhost:8080`, only one hyperdrive can be mirrored to HTTPS.
 
-If you know of a better solution, please let me know or open a PR.
+I have a vague idea of what virtual hosts are. If you need this feature, please let me know or open a PR.
 </details>
 
 ### Instructions
