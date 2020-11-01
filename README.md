@@ -225,3 +225,26 @@ you can't access the drive over HTTPS, try running in the foreground to see if t
 ```bash
 homebase
 ```
+
+#### 4. Using PiJuice HAT (optional) 
+
+This sections deal with managing a connected PiJuice HAT.
+
+##### 4.1 Install PiJuice software
+Again, you'll need to SSH into your pi:
+```
+ssh pi@<hostname or IP address of pi>
+```
+
+Once connected to the pi, you can install the `pijuice-base` package.
+```bash
+sudo apt-get install -y pijuice-base
+```
+
+##### 4.2 Use the CLI
+You should be able to configre a connected HAT using the
+PiJuice command line interface. Start the CLI like so:
+```bash
+pijuice_cli
+```
+Instructions can be found [here](https://github.com/PiSupply/PiJuice/tree/master/Software#pijuice-cli)
