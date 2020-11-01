@@ -1,10 +1,10 @@
 httpMirror: true       # enables HTTP mirroring
 
 ports:
-  http: {{ homebase_http_port }}             # HTTP port for redirects or non-TLS serving
-  https: {{ homebase_https_port }}           # HTTPS port for serving mirrored content and DNS data
+  http: {{ homebase_http_port }}         # HTTP port for redirects or non-TLS serving
+  https: {{ homebase_https_port }}       # HTTPS port for serving mirrored content and DNS data
 
-# enter your pinned dats here
+# enter your pinned hyperdrives here
 hyperdrives:
   - url: {{ landing_page_hyper_url }}
     domains:
