@@ -19,6 +19,7 @@ ntp_timezone: Europe/London
 # geerlingguy.ntp - see https://galaxy.ansible.com/geerlingguy/nodejs
 nodejs_version: "12.x"
 nodejs_npm_global_packages:
+  - name: '@beaker/homebase'
   - name: pm2
 
 # homebase_config
