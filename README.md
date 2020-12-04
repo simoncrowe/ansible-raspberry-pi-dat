@@ -44,7 +44,7 @@ If you haven't already generated ssh keys for your machine (not the Pi),
 you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
 command.
 
-You'll need an pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
+You'll need a pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
 (a.k.a. Raspbian) installation.
 The _Lite_ version of the OS makes more sense for a server as it lacks a GUI.
 
@@ -174,11 +174,11 @@ landing_page_https_domain: example.com
 # The email address to use when verifying SSL certificates with Letsencrypt
 letsencrypt_email: info@example.com
 
-# Add any other hyper URLs you want to pin using Homebase in this list
+# Add any other hyperdrives you want to pin using Homebase in this list
 hosted_hyper_urls:
   - hyper://bc9fc525239efd6e886a4b7d402ee800d1dd2812363f3be5161f0423fa46d3a3
   - hyper://c57ef9a28674ff072d293ac744a172a2aa4c975ea8ffeba964fed23fbca2ce77
-# If you don't want to pin any, just specify an empty list like so:
+# If you don't want to pin any more hyperdrives, just specify an empty list like so:
 # hosted_hyper_urls: []
 ```
 ##### 2.2. Setup
