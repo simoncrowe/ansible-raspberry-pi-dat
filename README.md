@@ -13,9 +13,9 @@ Version 3 of Homebase has dropped the Letsencrypt feature.
 In its place I've used a combination of NGINX and Certbot.
 
 Homebase listens for HTTP requests on port `8080` and NGINX acts as a reverse proxy,
-enabling HTTPS requests to be passed to Homebase. Homebase uses the host `localhost`
-and NGINX listens to `localhost:8080`; as there's only one localhost, only one hyperdrive
-can be mirrored to HTTPS.
+enabling HTTPS requests to be passed to Homebase.
+Homebase uses the host `localhost` and NGINX routes requests to `localhost:8080`;
+as there's only one localhost, only one hyperdrive can be mirrored to HTTPS.
 
 I have a vague idea of what virtual hosts are. If you need this feature, 
 please let me know or open a PR.
