@@ -1,0 +1,2 @@
+# GitHub linguist shouldn't detect Jinja2 as it misclassifies it as HJTML
+*.j2 -linguist-detectable
