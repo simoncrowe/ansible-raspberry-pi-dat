@@ -17,7 +17,7 @@ enabling HTTPS requests to be passed to Homebase.
 Homebase uses the host `localhost` and NGINX routes requests to `localhost:8080`;
 as there's only one localhost, only one hyperdrive can be mirrored to HTTPS.
 
-I have a vague idea of what virtual hosts are. If you need this feature, 
+I have a vague idea of what virtual hosts are. If you need this feature,
 please let me know or open a PR.
 </details>
 
@@ -37,27 +37,27 @@ pip install ansible passlib
 #### 1. SSH Authentication Setup
 ##### 1.1. Preparation
 You'll need to install the
-[sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/) 
+[sshpass](https://www.tecmint.com/sshpass-non-interactive-ssh-login-shell-script-ssh-password/)
 package for this step to work.
 
-If you haven't already generated ssh keys for your machine (not the Pi), 
-you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell 
+If you haven't already generated ssh keys for your machine (not the Pi),
+you can do so with the [ssh-keygen](https://www.ssh.com/ssh/keygen/) shell
 command.
 
-You'll need a pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/) 
+You'll need a pi with a fresh [Raspberry Pi OS](https://www.raspberrypi.org/downloads/raspberry-pi-os/)
 (a.k.a. Raspbian) installation.
 The _Lite_ version of the OS makes more sense for a server as it lacks a GUI.
 
-Enable SSH on the pi. You should follow sectiuon 3 of this 
-[page](https://www.raspberrypi.org/documentation/remote-access/ssh/) 
-for headless Raspberry Pi if you opted for _Raspberry Pi OS Lite_. 
+Enable SSH on the pi. You should follow section 3 of this
+[page](https://www.raspberrypi.org/documentation/remote-access/ssh/)
+for headless Raspberry Pi if you opted for _Raspberry Pi OS Lite_.
 
-Power up your pi and ensure it's connected to your network. 
-Ethernet is preferable; 
-[WiFi](https://www.raspberrypi.org/documentation/configuration/wireless/README.md) 
-is also an option. 
+Power up your pi and ensure it's connected to your network.
+Ethernet is preferable;
+[WiFi](https://www.raspberrypi.org/documentation/configuration/wireless/README.md)
+is also an option.
 
-If you have only one pi connected to your network and the following command 
+If you have only one pi connected to your network and the following command
 is successful, you can proceed to step 1.2.
 
 ```bash
@@ -72,8 +72,8 @@ Successful output should look something like this:
 
 If you do see something like the above, it may be worth replacing 
 `raspberrypi.local` with pi's IP address (e.g. `192.168.1.3`) to the file called
-`hosts` in the root directory of this repository. The hostname 
-`raspberrypi.local` isn't that reliable and it could cause problems with Ansible 
+`hosts` in the root directory of this repository. The hostname
+`raspberrypi.local` isn't very reliable and it could cause problems with Ansible
 later.
 
 Unsuccessful output will look like this:
@@ -82,9 +82,9 @@ Unsuccessful output will look like this:
 ping: unknown host raspberrypi.local
 ```
 
-If you get this, your pi might not reachable on your network or only by its IP 
-address. If you have more than one pi connected, you'll still need to find the 
-IP address of the pi you want to set up. 
+If you get this, your pi might not reachable on your network or only by its IP
+address. If you have more than one pi connected, you'll still need to find the
+IP address of the pi you want to set up.
 
 <details>
 <summary>One way to see if your pi is on your network is using nmap</summary>
@@ -92,7 +92,7 @@ IP address of the pi you want to set up.
 If you don't have nmap installed, you should be able to get it via your
 system package manager.  e.g. `sudo apt install nmap`
 
-This command will thoroughly scan your local network and may take several 
+This command will thoroughly scan your local network and may take several
 minutes.
 ```bash
 sudo nmap -A 192.168.1.1/24
@@ -144,19 +144,19 @@ it's probably the default, so hitting ENTER is fine.
 3. The new password for the default `pi` user of your pi. It's a good idea to 
 change this from the default, so let's automate it!
 
-If the playbook runs to completion without errors, you will no longer 
+If the playbook runs to completion without errors, you will no longer
 be prompted for a password when opening an SSH session on your pi. E.g.
 ```bash
 ssh pi@raspberrypi.local
 ```
 
-You will, however, not be able to SSH into your pi using another machine with 
-a different public key to the one you've run the playbook on. If you want to 
-authenticate from other machines, you can 
+You will, however, not be able to SSH into your pi using another machine with
+a different public key to the one you've run the playbook on. If you want to
+authenticate from other machines, you can
 [set this up manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 
 #### 2. Server Setup
-If step 1 was successful, setting up Homebase should be simple. 
+If step 1 was successful, setting up Homebase should be simple.
 
 ##### 2.1. Configuration
 You'll need to create a file called `private.yaml` in the `vars` subdirectory
@@ -192,12 +192,12 @@ Second, run the main playbook:
 ansible-playbook setup-hyper-server.yaml
 ```
 
-If successful, the above command applies a number of Ansible roles listed in 
-site.yaml to your pi, including basic security configuration. 
-A consequence of this hardened security is that you will now be unable to 
-SSH into your pi using a user's password.
-Passwordless login will still work, and you can 
-[manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md) 
+If successful, the above command applies a number of Ansible roles listed in
+site.yaml to your pi, including basic security configuration.
+A consequence of this hardened security is that you will now be unable to
+SSH into your pi using a user's password
+Passwordless login will still work, and you can
+[manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 add the public keys of other machines to your pi if needed.
 
 #### 3. Runnning Homebase
@@ -220,13 +220,13 @@ Similarly, you can stop it using:
 ```bash
 pm2 stop homebase
 ```
-If your Hyperdrive doesn't get a new peer connected when you start homebase and/or 
+If your Hyperdrive doesn't get a new peer connected when you start homebase and/or
 you can't access the drive over HTTPS, try running in the foreground to see if there are any errors:
 ```bash
 homebase
 ```
 
-#### 4. Using PiJuice HAT (optional) 
+#### 4. Using PiJuice HAT (optional)
 
 This sections deal with managing a connected PiJuice HAT.
 
