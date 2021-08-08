@@ -21,8 +21,8 @@ nodejs_version: "12.x"
 nodejs_npm_global_packages:
   - name: '@beaker/homebase'
   - name: pm2
+npm_config_unsafe_perm: true
 
 # homebase_config
 homebase_http_port: 8080
 homebase_https_port: 4433
-
