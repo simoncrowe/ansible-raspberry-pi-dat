@@ -8,30 +8,15 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: Install nginx
+- name: Install apt packages
   package:
-    name: nginx
+    name: "{{ item }}"
     state: present
-
-- name: Install python-certbot-nginx
-  package:
-    name: python-certbot-nginx
-    state: present
-
-- name: Install git
-  package:
-    name: git
-    state: present
-
-- name: Install vim
-  package:
-    name: vim
-    state: present
-
-- name: Install curl
-  package:
-    name: curl
-    state: present
+  with_items:
+    - nginx
+    - python-certbot-nginx
+    - vim
+    - curl
 
 - name: Upgrade apt packages
   apt:
@@ -40,4 +25,3 @@
 - name: Reboot the server to avoid issues with iptables setup.
   run_once: true
   reboot:
-
