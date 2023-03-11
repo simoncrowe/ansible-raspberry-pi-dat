@@ -195,7 +195,7 @@ ansible-playbook setup-hyper-server.yaml
 If successful, the above command applies a number of Ansible roles listed in
 site.yaml to your pi, including basic security configuration.
 A consequence of this hardened security is that you will now be unable to
-SSH into your pi using a user's password
+SSH into your pi using a user's password.
 Passwordless login will still work, and you can
 [manually](https://www.raspberrypi.org/documentation/remote-access/ssh/passwordless.md)
 add the public keys of other machines to your pi if needed.
